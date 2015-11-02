@@ -10,6 +10,8 @@ namespace Sparta.Controls
 
         internal void OnBeforeDoubleClick(Range target, ref bool cancel)
         {
+            foreach(var control in _controls)
+                control.BeforeDoubleClick(target, ref cancel);
         }
 
         internal void OnChange(Range target)

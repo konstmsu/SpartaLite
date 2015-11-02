@@ -1,33 +1,49 @@
 ﻿using Microsoft.Office.Interop.Excel;
+using Sparta.Engine.Utils;
 
 namespace Sparta.Controls
 {
     public class Button : IControl
     {
-        readonly RangePainter _painter;
+        public readonly RangePainter Painter;
         readonly Range _anchor;
+        Range Range => _anchor.Resize[2, 2];
+
+        public event System.Action Clicked;
 
         public string Title
         {
-            get { return (string)_painter.Value2Property.Value2; }
-            set { _painter.Value2Property.Value2 = value; }
+            get { return (string)Painter.Value2Property.Value2; }
+            set { Painter.Value2Property.Value2 = value; }
         }
 
         public Button(Range anchor)
         {
             _anchor = anchor;
-            _painter = new RangePainter(anchor.Worksheet)
+            Painter = new RangePainter
             {
                 MergeCells = true,
                 VerticalAlignment = XlVAlign.xlVAlignCenter,
                 HorizontalAlignment = XlHAlign.xlHAlignCenter,
                 InteriorColor = SpartaColors.ButtonBackground,
+                FontColor = SpartaColors.ButtonForeground,
+                IsBold = true,
             };
+            Painter.Border.Around();
         }
 
         public void Paint()
         {
-            _painter.Paint(_anchor.Resize[2, 2]);
+            Painter.Paint(Range);
+        }
+
+        public void BeforeDoubleClick(Range target, ref bool handled)
+        {
+            if (target.Application.Intersect(target, Range) != null)
+            {
+                Clicked.Raise();
+                handled = true;
+            }
         }
     }
 }

@@ -27,14 +27,15 @@ namespace Sparta.Controls
             _sheet.Change -= OnChange;
         }
 
-        private void OnChange(Range Target)
+        void OnChange(Range Target)
         {
             _children.OnChange(Target);
         }
 
-        private void OnBeforeDoubleClick(Range Target, ref bool Cancel)
+        void OnBeforeDoubleClick(Range Target, ref bool Cancel)
         {
             _children.OnBeforeDoubleClick(Target, ref Cancel);
+            Paint();
         }
 
         public void Paint()

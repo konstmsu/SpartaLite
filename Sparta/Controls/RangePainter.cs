@@ -5,18 +5,14 @@ namespace Sparta.Controls
 {
     public class RangePainter
     {
-        private Worksheet sheet;
-
         public readonly Value2Property Value2Property = new Value2Property();
         public readonly GenericProperty<bool> MergeCellsProperty = new GenericProperty<bool>((r, value) => r.MergeCells = value);
         public readonly GenericProperty<XlVAlign> VerticalAlignmentProperty = new GenericProperty<XlVAlign>((r, value) => r.VerticalAlignment = value);
         public readonly GenericProperty<XlHAlign> HorizontalAlignmentProperty = new GenericProperty<XlHAlign>((r, value) => r.HorizontalAlignment = value);
-        public readonly GenericProperty<ExcelColor> InteriorColorProperty = new GenericProperty<ExcelColor>((r, value) => r.Interior.ColorIndex = value);
-
-        public RangePainter(Worksheet sheet)
-        {
-            this.sheet = sheet;
-        }
+        public readonly GenericProperty<ExcelColor> InteriorColorProperty = new GenericProperty<ExcelColor>((r, value) => value.Apply(r.Interior));
+        public readonly GenericProperty<ExcelColor> FontColorProperty = new GenericProperty<ExcelColor>((r, value) => value.Apply(r.Font));
+        public readonly GenericProperty<bool> IsBoldProperty = new GenericProperty<bool>((r, value) => r.Font.Bold = value);
+        public readonly BorderProperty Border = new BorderProperty();
 
         IEnumerable<IRangeProperty> Properties
         {
@@ -27,6 +23,9 @@ namespace Sparta.Controls
                 yield return HorizontalAlignmentProperty;
                 yield return VerticalAlignmentProperty;
                 yield return InteriorColorProperty;
+                yield return FontColorProperty;
+                yield return IsBoldProperty;
+                yield return Border;
             }
         }
 
@@ -64,6 +63,18 @@ namespace Sparta.Controls
         {
             get { return InteriorColorProperty.Value; }
             set { InteriorColorProperty.Value = value; }
+        }
+
+        public ExcelColor FontColor
+        {
+            get { return FontColorProperty.Value; }
+            set { FontColorProperty.Value = value; }
+        }
+
+        public bool IsBold
+        {
+            get { return IsBoldProperty.Value; }
+            set { IsBoldProperty.Value = value; }
         }
     }
 }

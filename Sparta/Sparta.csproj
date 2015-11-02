@@ -97,6 +97,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\BorderProperty.cs" />
     <Compile Include="Controls\Button.cs" />
     <Compile Include="Controls\ControlCollection.cs" />
     <Compile Include="Controls\ControlRoot.cs" />
@@ -137,8 +138,6 @@
     <EmbeddedResource Include="EntryPoint.resx">
       <DependentUpon>EntryPoint.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="Properties\DataSources\Sparta.ViewModels.FXForwardViewModel.datasource" />
-    <None Include="Properties\DataSources\Sparta.ViewModels.FXOptionPricerViewModel.datasource" />
     <None Include="Sparta.xlsx" />
     <None Include="Sparta_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
