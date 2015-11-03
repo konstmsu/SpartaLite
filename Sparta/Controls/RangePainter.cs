@@ -22,6 +22,7 @@ namespace Sparta.Controls
         public readonly GenericProperty<ExcelColor> FontColorProperty = new GenericProperty<ExcelColor>((r, value) => value?.Apply(r.Font));
         public readonly GenericProperty<bool> IsBoldProperty = new GenericProperty<bool>((r, value) => r.Font.Bold = value);
         public readonly BorderProperty Border = new BorderProperty();
+        public readonly ValidationProperty Validation = new ValidationProperty();
 
         IEnumerable<IRangeProperty> Properties
         {
@@ -36,6 +37,7 @@ namespace Sparta.Controls
                 yield return FontColorProperty;
                 yield return IsBoldProperty;
                 yield return Border;
+                yield return Validation;
             }
         }
 

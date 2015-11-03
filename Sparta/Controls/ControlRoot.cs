@@ -16,9 +16,11 @@ namespace Sparta.Controls
             sheet.BeforeDoubleClick += OnBeforeDoubleClick;
         }
 
-        internal void AddControl(IControl control)
+        internal T AddControl<T>(T control)
+            where T: IControl
         {
             _children.Add(control);
+            return control;
         }
 
         public void Dispose()
@@ -46,7 +48,17 @@ namespace Sparta.Controls
 
         public void Paint()
         {
-            _children.Paint();
+            // TODO: Preserve old value
+            _sheet.Application.EnableEvents = false;
+            try
+            {
+                _children.Paint();
+                _sheet.Columns.AutoFit();
+            }
+            finally
+            {
+                _sheet.Application.EnableEvents = true;
+            }
         }
     }
 }

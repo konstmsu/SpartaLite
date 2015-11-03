@@ -5,6 +5,7 @@ namespace Sparta.Controls
 {
     public class ExcelColor
     {
+        public static readonly ExcelColor White = FromRgb(255, 255, 255);
         public static readonly ExcelColor Red = FromRgb(255, 0, 0);
         public static readonly ExcelColor Green = FromRgb(0, 255, 0);
         public static readonly ExcelColor Blue = FromRgb(0, 0, 255);

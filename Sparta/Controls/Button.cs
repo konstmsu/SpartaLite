@@ -13,6 +13,10 @@ namespace Sparta.Controls
             return target.GetIntersection(Range);
         }
 
+        public void OnChange(Range target)
+        {
+        }
+
         Range Range => Anchor.Resize[2, 2];
 
         public event System.Action Clicked;

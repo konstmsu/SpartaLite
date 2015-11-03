@@ -18,12 +18,21 @@ namespace Sparta.Controls
                 var range = control.NarrowDownEventRange(target);
 
                 if (range != null)
-                    control.BeforeDoubleClick(target, handled);
+                    control.BeforeDoubleClick(range, handled);
             }
         }
 
         internal void OnChange(Range target)
         {
+            foreach (var control in _controls)
+            {
+                var range = control.NarrowDownEventRange(target);
+
+                if (range != null)
+                    control.OnChange(range);
+            }
+
+            Paint();
         }
 
         internal void Paint()

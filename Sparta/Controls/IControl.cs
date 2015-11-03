@@ -13,5 +13,6 @@ namespace Sparta.Controls
         void BeforeDoubleClick(Range target, HandledIndicator handled);
         Range Anchor { get; set; }
         Range NarrowDownEventRange(Range target);
+        void OnChange(Range target);
     }
 }

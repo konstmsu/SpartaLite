@@ -16,6 +16,12 @@ namespace Sparta.Controls
             return target;
         }
 
+        public void OnChange(Range target)
+        {
+            _values.OnChange(target);
+            // _labels.OnChange(target);
+        }
+
         readonly ControlCollection _labels = new ControlCollection();
         readonly ControlCollection _values = new ControlCollection();
 
@@ -30,12 +36,19 @@ namespace Sparta.Controls
             _values.Add(value);
         }
 
+        public int PropertyCount
+        {
+            get
+            {
+                var count = _labels.Count;
+                Debug.Assert(_values.Count == count);
+                return count;
+            }
+        }
+
         public void Paint()
         {
-            var count = _labels.Count;
-            Debug.Assert(_values.Count == count);
-
-            for (var i = 0; i < count; i++)
+            for (var i = 0; i < PropertyCount; i++)
             {
                 _labels[i].Anchor = Anchor.Offset[i];
                 _values[i].Anchor = Anchor.Offset[i, 1];

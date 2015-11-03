@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Office.Interop.Excel;
 using Sparta.Controls;
+using Sparta.Engine.Utils;
 
 namespace Sparta.Sheets
 {
@@ -9,10 +10,16 @@ namespace Sparta.Sheets
         public PricerSheet(Worksheet sheet)
             : base(sheet)
         {
-            PropertyGridControl market;
-            ControlRoot.AddControl(market = new PropertyGridControl(sheet.Range["B3"]));
-            market.AddProperty("Valuation Date", new DateEditorControl { Value = DateTime.Today });
-            market.AddProperty("Market", new LabelControl { Text = "Live" });
+            var marketSettings = ControlRoot.AddControl(new PropertyGridControl(sheet.Range["B3"]));
+
+            var market = new DropDownSelector { Values = new[] { "Live", "Close" }.ToReadOnly() };
+            var valuationDate = new DateEditorControl { Value = DateTime.Today };
+            System.Action onMarketChanged = () => valuationDate.IsDisabled = market.SelectedValue == "Live";
+            market.SelectedValueChanged += onMarketChanged;
+            onMarketChanged();
+
+            marketSettings.AddProperty("Valuation Date", valuationDate);
+            marketSettings.AddProperty("Market", market);
         }
     }
 }

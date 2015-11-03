@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Office.Interop.Excel;
+﻿using Microsoft.Office.Interop.Excel;
 using Sparta.Utils;
 
 namespace Sparta.Controls
@@ -14,6 +9,10 @@ namespace Sparta.Controls
         public Range NarrowDownEventRange(Range target)
         {
             return target.GetIntersection(Anchor);
+        }
+
+        public void OnChange(Range target)
+        {
         }
 
         readonly RangePainter _painter;
