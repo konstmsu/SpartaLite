@@ -8,19 +8,14 @@ namespace Sparta.Sheets
     {
         readonly Button _pricer;
 
-        public ContentsSheet(Worksheet sheet)
+        public ContentsSheet(Worksheet sheet, SheetFactory sheetFactory)
             : base(sheet)
         {
-            _controlRoot.AddControl(_pricer = new Button(sheet.Range["B3"])
+            ControlRoot.AddControl(_pricer = new Button(sheet.Range["B3"])
             {
                 Title = "Pricer",
             });
-            _pricer.Clicked += () => { _pricer.Title += "a"; };
-        }
-
-        internal void Run()
-        {
-            _controlRoot.Paint();
+            _pricer.Clicked += () => { sheetFactory.ShowSheet(s => new PricerSheet(s)); };
         }
     }
 }

@@ -6,11 +6,20 @@ namespace Sparta.Controls
     public class RangePainter
     {
         public readonly Value2Property Value2Property = new Value2Property();
+        public readonly GenericProperty<string> NumberFormatProperty = new GenericProperty<string>((r, value) => r.NumberFormat = value);
         public readonly GenericProperty<bool> MergeCellsProperty = new GenericProperty<bool>((r, value) => r.MergeCells = value);
-        public readonly GenericProperty<XlVAlign> VerticalAlignmentProperty = new GenericProperty<XlVAlign>((r, value) => r.VerticalAlignment = value);
-        public readonly GenericProperty<XlHAlign> HorizontalAlignmentProperty = new GenericProperty<XlHAlign>((r, value) => r.HorizontalAlignment = value);
-        public readonly GenericProperty<ExcelColor> InteriorColorProperty = new GenericProperty<ExcelColor>((r, value) => value.Apply(r.Interior));
-        public readonly GenericProperty<ExcelColor> FontColorProperty = new GenericProperty<ExcelColor>((r, value) => value.Apply(r.Font));
+        public readonly GenericProperty<XlVAlign?> VerticalAlignmentProperty = new GenericProperty<XlVAlign?>((r, value) =>
+        {
+            if (value != null)
+                r.VerticalAlignment = value;
+        });
+        public readonly GenericProperty<XlHAlign?> HorizontalAlignmentProperty = new GenericProperty<XlHAlign?>((r, value) =>
+        {
+            if (value != null)
+                r.HorizontalAlignment = value;
+        });
+        public readonly GenericProperty<ExcelColor> InteriorColorProperty = new GenericProperty<ExcelColor>((r, value) => value?.Apply(r.Interior));
+        public readonly GenericProperty<ExcelColor> FontColorProperty = new GenericProperty<ExcelColor>((r, value) => value?.Apply(r.Font));
         public readonly GenericProperty<bool> IsBoldProperty = new GenericProperty<bool>((r, value) => r.Font.Bold = value);
         public readonly BorderProperty Border = new BorderProperty();
 
@@ -20,6 +29,7 @@ namespace Sparta.Controls
             {
                 yield return MergeCellsProperty;
                 yield return Value2Property;
+                yield return NumberFormatProperty;
                 yield return HorizontalAlignmentProperty;
                 yield return VerticalAlignmentProperty;
                 yield return InteriorColorProperty;
@@ -47,13 +57,13 @@ namespace Sparta.Controls
             set { MergeCellsProperty.Value = value; }
         }
 
-        public XlVAlign VerticalAlignment
+        public XlVAlign? VerticalAlignment
         {
             get { return VerticalAlignmentProperty.Value; }
             set { VerticalAlignmentProperty.Value = value; }
         }
 
-        public XlHAlign HorizontalAlignment
+        public XlHAlign? HorizontalAlignment
         {
             get { return HorizontalAlignmentProperty.Value; }
             set { HorizontalAlignmentProperty.Value = value; }
@@ -75,6 +85,12 @@ namespace Sparta.Controls
         {
             get { return IsBoldProperty.Value; }
             set { IsBoldProperty.Value = value; }
+        }
+
+        public string NumberFormat
+        {
+            get { return NumberFormatProperty.Value; }
+            set { NumberFormatProperty.Value = value; }
         }
     }
 }

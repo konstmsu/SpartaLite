@@ -1,4 +1,5 @@
 ﻿using Microsoft.Office.Interop.Excel;
+using Sparta.Controls;
 using Sparta.Sheets;
 
 namespace Sparta
@@ -7,9 +8,8 @@ namespace Sparta
     {
         private void OnStartup(object sender, System.EventArgs e)
         {
-            var sheet = Application.Worksheets.Add();
-            var contents = new ContentsSheet(sheet);
-            contents.Run();
+            var factory = new SheetFactory(Application);
+            factory.ShowSheet(s => new ContentsSheet(s, factory));
 
             Visible = XlSheetVisibility.xlSheetVeryHidden;
         }

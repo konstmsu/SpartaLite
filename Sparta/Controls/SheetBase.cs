@@ -4,11 +4,16 @@ namespace Sparta.Controls
 {
     public class SheetBase
     {
-        protected readonly ControlRoot _controlRoot;
+        protected readonly ControlRoot ControlRoot;
 
         public SheetBase(Worksheet sheet)
         {
-            _controlRoot = new ControlRoot(sheet);
+            ControlRoot = new ControlRoot(sheet);
+        }
+
+        public void Run()
+        {
+            ControlRoot.Paint();
         }
     }
 }

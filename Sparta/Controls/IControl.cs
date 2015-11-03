@@ -10,6 +10,8 @@ namespace Sparta.Controls
     public interface IControl
     {
         void Paint();
-        void BeforeDoubleClick(Range target, ref bool handled);
+        void BeforeDoubleClick(Range target, HandledIndicator handled);
+        Range Anchor { get; set; }
+        Range NarrowDownEventRange(Range target);
     }
 }

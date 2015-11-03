@@ -8,10 +8,18 @@ namespace Sparta.Controls
     {
         readonly List<IControl> _controls = new List<IControl>();
 
-        internal void OnBeforeDoubleClick(Range target, ref bool cancel)
+        public int Count => _controls.Count;
+        public IControl this[int i] => _controls[i];
+
+        internal void OnBeforeDoubleClick(Range target, HandledIndicator handled)
         {
-            foreach(var control in _controls)
-                control.BeforeDoubleClick(target, ref cancel);
+            foreach (var control in _controls)
+            {
+                var range = control.NarrowDownEventRange(target);
+
+                if (range != null)
+                    control.BeforeDoubleClick(target, handled);
+            }
         }
 
         internal void OnChange(Range target)

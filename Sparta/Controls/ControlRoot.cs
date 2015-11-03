@@ -16,9 +16,9 @@ namespace Sparta.Controls
             sheet.BeforeDoubleClick += OnBeforeDoubleClick;
         }
 
-        internal void AddControl(Button button)
+        internal void AddControl(IControl control)
         {
-            _children.Add(button);
+            _children.Add(control);
         }
 
         public void Dispose()
@@ -34,7 +34,13 @@ namespace Sparta.Controls
 
         void OnBeforeDoubleClick(Range Target, ref bool Cancel)
         {
-            _children.OnBeforeDoubleClick(Target, ref Cancel);
+            var handled = new HandledIndicator();
+
+            _children.OnBeforeDoubleClick(Target, handled);
+
+            if (handled.IsHandled)
+                Cancel = true;
+
             Paint();
         }
 

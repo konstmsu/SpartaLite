@@ -13,12 +13,35 @@
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <DefineConstants>VSTO40</DefineConstants>
     <OfficeApplication>Excel</OfficeApplication>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-    <BootstrapperComponentsLocation>HomeSite</BootstrapperComponentsLocation>
     <ProjectGuid>{CFEDB8C4-1708-4508-91AA-D8F786DF2D28}</ProjectGuid>
     <SolutionID>929c0d18-dd84-41d7-bc40-d05e0974fb55</SolutionID>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <PublishUrl>publish\</PublishUrl>
+    <InstallUrl />
+    <TargetCulture>en</TargetCulture>
+    <ApplicationVersion>1.0.0.0</ApplicationVersion>
+    <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>days</UpdateIntervalUnits>
+    <IsWebBootstrapper>False</IsWebBootstrapper>
+    <ProductName>Sparta</ProductName>
+    <PublisherName />
+    <SupportUrl />
+    <FriendlyName>Sparta</FriendlyName>
+    <OfficeApplicationDescription />
   </PropertyGroup>
   <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.VSTORuntime.4.0">
       <Visible>False</Visible>
       <ProductName>Microsoft Visual Studio 2010 Tools for Office Runtime %28x86 and x64%29</ProductName>
@@ -54,15 +77,19 @@
     This section specifies references for the project.
   -->
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Office.Tools.v4.0.Framework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
@@ -101,13 +128,22 @@
     <Compile Include="Controls\Button.cs" />
     <Compile Include="Controls\ControlCollection.cs" />
     <Compile Include="Controls\ControlRoot.cs" />
+    <Compile Include="Controls\DateEditorControl.cs" />
+    <Compile Include="Controls\DateEditorPopupView.xaml.cs">
+      <DependentUpon>DateEditorPopupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DateEditorPopupViewModel.cs" />
     <Compile Include="Controls\ExcelColor.cs" />
     <Compile Include="Controls\GenericProperty.cs" />
     <Compile Include="Controls\IControl.cs" />
     <Compile Include="Controls\IRangeProperty.cs" />
+    <Compile Include="Controls\KnownFormats.cs" />
+    <Compile Include="Controls\LabelControl.cs" />
+    <Compile Include="Controls\PropertyGridControl.cs" />
     <Compile Include="Controls\RangeAddress.cs" />
     <Compile Include="Controls\RangePainter.cs" />
     <Compile Include="Controls\SheetBase.cs" />
+    <Compile Include="Controls\SheetFactory.cs" />
     <Compile Include="Controls\SpartaColors.cs" />
     <Compile Include="Controls\Value2Property.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -118,12 +154,15 @@
       <DependentUpon>EntryPoint.Designer.xml</DependentUpon>
     </Compile>
     <Compile Include="Sheets\ContentsSheet.cs" />
+    <Compile Include="Sheets\PricerSheet.cs" />
     <Compile Include="ThisWorkbook.cs">
       <DependentUpon>Sparta.xlsx</DependentUpon>
     </Compile>
     <Compile Include="ThisWorkbook.Designer.cs">
       <DependentUpon>ThisWorkbook.Designer.xml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\ExcelHelper.cs" />
+    <Compile Include="Utils\Popup.cs" />
     <Compile Include="ViewModels\FXForwardViewModel.cs" />
     <Compile Include="ViewModels\FXOptionPricerViewModel.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -165,6 +204,12 @@
     <None Include="EntryPoint.Designer.xml">
       <DependentUpon>EntryPoint.cs</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\DateEditorPopupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

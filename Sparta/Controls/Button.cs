@@ -1,13 +1,19 @@
 ﻿using Microsoft.Office.Interop.Excel;
 using Sparta.Engine.Utils;
+using Sparta.Utils;
 
 namespace Sparta.Controls
 {
     public class Button : IControl
     {
         public readonly RangePainter Painter;
-        readonly Range _anchor;
-        Range Range => _anchor.Resize[2, 2];
+        public Range Anchor { get; set; }
+        public Range NarrowDownEventRange(Range target)
+        {
+            return target.GetIntersection(Range);
+        }
+
+        Range Range => Anchor.Resize[2, 2];
 
         public event System.Action Clicked;
 
@@ -19,7 +25,7 @@ namespace Sparta.Controls
 
         public Button(Range anchor)
         {
-            _anchor = anchor;
+            Anchor = anchor;
             Painter = new RangePainter
             {
                 MergeCells = true,
@@ -37,12 +43,12 @@ namespace Sparta.Controls
             Painter.Paint(Range);
         }
 
-        public void BeforeDoubleClick(Range target, ref bool handled)
+        public void BeforeDoubleClick(Range target, HandledIndicator handled)
         {
             if (target.Application.Intersect(target, Range) != null)
             {
                 Clicked.Raise();
-                handled = true;
+                handled.MarkHandled();
             }
         }
     }
