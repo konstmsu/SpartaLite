@@ -7,5 +7,6 @@
         public static readonly ExcelColor ValueWithPopup = ExcelColor.Blue;
         public static readonly ExcelColor DisabledControlInterior = ExcelColor.LightGray;
         public static readonly ExcelColor DefaultControlInterior = ExcelColor.White;
+        public static readonly ExcelColor DisabledControlFont = ExcelColor.DarkGray;
     }
 }

@@ -21,6 +21,7 @@ namespace Sparta.Controls
         public readonly GenericProperty<ExcelColor> InteriorColorProperty = new GenericProperty<ExcelColor>((r, value) => value?.Apply(r.Interior));
         public readonly GenericProperty<ExcelColor> FontColorProperty = new GenericProperty<ExcelColor>((r, value) => value?.Apply(r.Font));
         public readonly GenericProperty<bool> IsBoldProperty = new GenericProperty<bool>((r, value) => r.Font.Bold = value);
+        public readonly GenericProperty<double?> FontSizeProperty = new GenericProperty<double?>((r, value) => r.Font.Size = value);
         public readonly BorderProperty Border = new BorderProperty();
         public readonly ValidationProperty Validation = new ValidationProperty();
 
@@ -93,6 +94,12 @@ namespace Sparta.Controls
         {
             get { return NumberFormatProperty.Value; }
             set { NumberFormatProperty.Value = value; }
+        }
+
+        public double? FontSize
+        {
+            get { return FontSizeProperty.Value; }
+            set { FontSizeProperty.Value = value; }
         }
     }
 }

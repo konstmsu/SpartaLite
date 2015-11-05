@@ -7,15 +7,28 @@ namespace Sparta.Engine.Utils
 {
     public static class ExtensionMethods
     {
-        public static void Raise(this Action action) => action?.Invoke();
-        public static string JoinStrings(this IEnumerable<string> values, string separator)
+        public static string JoinStrings(this IEnumerable<string> values, string separator) => values == null ? null : string.Join(separator, values);
+        public static string FormatWith(this string format, params object[] args) => format == null ? null : string.Format(format, args);
+        public static string[] Split(this string value, string separator) => value == null ? null : value.Split(new[] { separator }, StringSplitOptions.None);
+        public static ReadOnlyCollection<T> ToReadOnly<T>(this IEnumerable<T> values) => values == null ? new List<T>().AsReadOnly() : values.ToList().AsReadOnly();
+
+        public static void ForEachAggregatingExceptions<T>(this IEnumerable<T> values, Action<T> action)
         {
-            return values == null ? null : string.Join(separator, values);
+            var exceptions = new List<Exception>();
+
+            foreach (var value in values)
+                try
+                {
+                    action(value);
+                }
+                catch (Exception ex)
+                {
+                    exceptions.Add(ex);
+                }
+
+            if (exceptions.Any())
+                throw new AggregateException(exceptions);
         }
-
-        public static string FormatWith(this string format, params object[] args) => string.Format(format, args);
-
-        public static ReadOnlyCollection<T> ToReadOnly<T>(this IEnumerable<T> values) => values.ToList().AsReadOnly();
     }
 
     public static class ReadOnlyCollectionEx<T>

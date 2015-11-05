@@ -20,23 +20,11 @@ namespace Sparta {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Tools.Office.ProgrammingModel.dll", "14.0.0.0")]
         private global::System.Object missing = global::System.Type.Missing;
         
-        private System.ComponentModel.IContainer components;
-        
-        internal System.Windows.Forms.DataGridViewTextBoxColumn settlementDateDataGridViewTextBoxColumn;
-        
-        internal System.Windows.Forms.DataGridViewTextBoxColumn domesticAmountDataGridViewTextBoxColumn;
-        
-        internal System.Windows.Forms.DataGridViewTextBoxColumn domesticCurrencyDataGridViewTextBoxColumn;
-        
-        internal System.Windows.Forms.DataGridViewTextBoxColumn foreignAmountDataGridViewTextBoxColumn;
-        
-        internal System.Windows.Forms.DataGridViewTextBoxColumn foreignCurrencyDataGridViewTextBoxColumn;
-        
         /// 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public EntryPoint(global::Microsoft.Office.Tools.Excel.Factory factory, global::System.IServiceProvider serviceProvider) : 
-                base(factory, serviceProvider, "Sheet2", "Sheet2") {
+                base(factory, serviceProvider, "Sheet3", "Sheet3") {
         }
         
         /// 
@@ -148,43 +136,8 @@ namespace Sparta {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Tools.Office.ProgrammingModel.dll", "14.0.0.0")]
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         private void InitializeComponents() {
-            this.settlementDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.domesticAmountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.domesticCurrencyDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.foreignAmountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.foreignCurrencyDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             // 
-            // settlementDateDataGridViewTextBoxColumn
-            // 
-            this.settlementDateDataGridViewTextBoxColumn.DataPropertyName = "SettlementDate";
-            this.settlementDateDataGridViewTextBoxColumn.HeaderText = "SettlementDate";
-            this.settlementDateDataGridViewTextBoxColumn.Name = "settlementDateDataGridViewTextBoxColumn";
-            // 
-            // domesticAmountDataGridViewTextBoxColumn
-            // 
-            this.domesticAmountDataGridViewTextBoxColumn.DataPropertyName = "DomesticAmount";
-            this.domesticAmountDataGridViewTextBoxColumn.HeaderText = "DomesticAmount";
-            this.domesticAmountDataGridViewTextBoxColumn.Name = "domesticAmountDataGridViewTextBoxColumn";
-            // 
-            // domesticCurrencyDataGridViewTextBoxColumn
-            // 
-            this.domesticCurrencyDataGridViewTextBoxColumn.DataPropertyName = "DomesticCurrency";
-            this.domesticCurrencyDataGridViewTextBoxColumn.HeaderText = "DomesticCurrency";
-            this.domesticCurrencyDataGridViewTextBoxColumn.Name = "domesticCurrencyDataGridViewTextBoxColumn";
-            // 
-            // foreignAmountDataGridViewTextBoxColumn
-            // 
-            this.foreignAmountDataGridViewTextBoxColumn.DataPropertyName = "ForeignAmount";
-            this.foreignAmountDataGridViewTextBoxColumn.HeaderText = "ForeignAmount";
-            this.foreignAmountDataGridViewTextBoxColumn.Name = "foreignAmountDataGridViewTextBoxColumn";
-            // 
-            // foreignCurrencyDataGridViewTextBoxColumn
-            // 
-            this.foreignCurrencyDataGridViewTextBoxColumn.DataPropertyName = "ForeignCurrency";
-            this.foreignCurrencyDataGridViewTextBoxColumn.HeaderText = "ForeignCurrency";
-            this.foreignCurrencyDataGridViewTextBoxColumn.Name = "foreignCurrencyDataGridViewTextBoxColumn";
-            // 
-            // Contents
+            // Sheet3
             // 
         }
         

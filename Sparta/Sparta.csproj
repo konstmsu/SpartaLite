@@ -15,6 +15,7 @@
     <OfficeApplication>Excel</OfficeApplication>
     <ProjectGuid>{CFEDB8C4-1708-4508-91AA-D8F786DF2D28}</ProjectGuid>
     <SolutionID>929c0d18-dd84-41d7-bc40-d05e0974fb55</SolutionID>
+    <IsWebBootstrapper>False</IsWebBootstrapper>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <PublishUrl>publish\</PublishUrl>
     <InstallUrl />
@@ -24,7 +25,6 @@
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>days</UpdateIntervalUnits>
-    <IsWebBootstrapper>False</IsWebBootstrapper>
     <ProductName>Sparta</ProductName>
     <PublisherName />
     <SupportUrl />
@@ -124,6 +124,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ContrainerControl.cs" />
+    <Compile Include="Controls\StatusControl.cs" />
+    <Compile Include="EntryPoint.cs">
+      <DependentUpon>Sparta.xlsx</DependentUpon>
+    </Compile>
+    <Compile Include="EntryPoint.Designer.cs">
+      <DependentUpon>EntryPoint.Designer.xml</DependentUpon>
+    </Compile>
     <Compile Include="Utils\CoerceTo.cs" />
     <Compile Include="Controls\BorderProperty.cs" />
     <Compile Include="Controls\Button.cs" />
@@ -150,12 +158,6 @@
     <Compile Include="Controls\ValidationProperty.cs" />
     <Compile Include="Controls\Value2Property.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="EntryPoint.cs">
-      <DependentUpon>Sparta.xlsx</DependentUpon>
-    </Compile>
-    <Compile Include="EntryPoint.Designer.cs">
-      <DependentUpon>EntryPoint.Designer.xml</DependentUpon>
-    </Compile>
     <Compile Include="Sheets\ContentsSheet.cs" />
     <Compile Include="Sheets\PricerSheet.cs" />
     <Compile Include="ThisWorkbook.cs">
@@ -177,9 +179,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="EntryPoint.resx">
-      <DependentUpon>EntryPoint.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="Sparta.xlsx" />
     <None Include="Sparta_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
@@ -204,15 +203,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="EntryPoint.Designer.xml">
-      <DependentUpon>EntryPoint.cs</DependentUpon>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Page Include="Controls\DateEditorPopupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="EntryPoint.Designer.xml">
+      <DependentUpon>EntryPoint.cs</DependentUpon>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -234,7 +233,7 @@
       <FlavorProperties GUID="{BAA0C2D2-18E2-41B9-852F-F413020CAA33}">
         <ProjectProperties HostName="Sparta.xlsx" HostPackage="{3F2B7691-D1D1-402F-9370-2704A737CF60}" OfficeVersion="15.0" VstxVersion="4.0" ApplicationType="XLS" Language="CS" TemplatesPath="VSTOTemplates" DebugInfoExeName="C:\Program Files\Microsoft Office 15\root\Office15\Excel.exe" DebugInfoCommandLine="/x &quot;[$OUTPUT]Sparta.xlsx&quot;" />
         <Host Name="Excel Document" Path=".\Sparta.xlsx" GeneratedCodeNamespace="Sparta">
-          <HostItem Name="Sheet2" Code="EntryPoint.cs" CanonicalName="Sheet2" DisplayName="EntryPoint" Blueprint="EntryPoint.Designer.xml" GeneratedCode="EntryPoint.Designer.cs" />
+          <HostItem Name="Sheet3" Code="EntryPoint.cs" CanonicalName="Sheet3" DisplayName="EntryPoint" Blueprint="EntryPoint.Designer.xml" GeneratedCode="EntryPoint.Designer.cs" />
           <HostItem Name="ThisWorkbook" Code="ThisWorkbook.cs" CanonicalName="ThisWorkbook" Blueprint="ThisWorkbook.Designer.xml" GeneratedCode="ThisWorkbook.Designer.cs" />
         </Host>
       </FlavorProperties>

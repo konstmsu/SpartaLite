@@ -51,7 +51,7 @@ namespace Sparta.Controls
         {
             if (target.Application.Intersect(target, Range) != null)
             {
-                Clicked.Raise();
+                Clicked?.Invoke();
                 handled.MarkHandled();
             }
         }

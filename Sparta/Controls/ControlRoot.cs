@@ -7,6 +7,7 @@ namespace Sparta.Controls
     {
         readonly Worksheet _sheet;
         readonly ControlCollection _children = new ControlCollection();
+        public event Action<Exception> UnhandledException;
 
         public ControlRoot(Worksheet sheet)
         {
@@ -29,19 +30,28 @@ namespace Sparta.Controls
             _sheet.Change -= OnChange;
         }
 
-        void OnChange(Range Target)
+        void OnChange(Range target)
         {
-            _children.OnChange(Target);
+            try
+            {
+                _children.OnChange(target);
+            }
+            catch (Exception ex)
+            {
+                UnhandledException?.Invoke(ex);
+            }
+
+            Paint();
         }
 
-        void OnBeforeDoubleClick(Range Target, ref bool Cancel)
+        void OnBeforeDoubleClick(Range target, ref bool cancel)
         {
             var handled = new HandledIndicator();
 
-            _children.OnBeforeDoubleClick(Target, handled);
+            _children.OnBeforeDoubleClick(target, handled);
 
             if (handled.IsHandled)
-                Cancel = true;
+                cancel = true;
 
             Paint();
         }

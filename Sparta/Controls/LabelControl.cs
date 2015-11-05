@@ -6,34 +6,42 @@ namespace Sparta.Controls
     public class LabelControl : IControl
     {
         public Range Anchor { get; set; }
+        readonly int _rowCount;
+        readonly int _columnCount;
+        Range Range => Anchor.Resize[_rowCount, _columnCount];
+
         public Range NarrowDownEventRange(Range target)
         {
-            return target.GetIntersection(Anchor);
+            return target.GetIntersection(Range);
         }
 
         public void OnChange(Range target)
         {
         }
 
-        readonly RangePainter _painter;
+        public readonly RangePainter Painter;
 
         public string Text
         {
-            get { return (string)_painter.Value2; }
-            set { _painter.Value2 = value; }
+            get { return (string)Painter.Value2; }
+            set { Painter.Value2 = value; }
         }
 
-        public LabelControl()
+        public LabelControl(int rowCount = 1, int columnCount = 1)
         {
-            _painter = new RangePainter
+            _rowCount = rowCount;
+            _columnCount = columnCount;
+
+            Painter = new RangePainter
             {
-                InteriorColor = ExcelColor.LightGray
+                InteriorColor = ExcelColor.LightGray,
+                MergeCells = true
             };
         }
 
         public void Paint()
         {
-            _painter.Paint(Anchor);
+            Painter.Paint(Range);
         }
 
         public void BeforeDoubleClick(Range target, HandledIndicator handled)

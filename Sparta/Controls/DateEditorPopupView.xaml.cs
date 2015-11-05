@@ -17,7 +17,7 @@ namespace Sparta.Controls
 
         void CalendarDayButton_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            ValueSelected.Raise();
+            ValueSelected?.Invoke();
         }
     }
 }

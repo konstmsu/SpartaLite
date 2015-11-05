@@ -13,7 +13,7 @@ namespace Sparta.Utils
         public interface ICoercionContext<TFrom>
         {
             ICoercionContext<TFrom> Type<T>(Func<T, TTo> coerce);
-            ICoercionContext<TFrom> WhenNull(Func<TTo> result);
+            ICoercionContext<TFrom> Null(Func<TTo> result);
             ICoercionContext<TFrom> If(Func<TFrom, bool> predicate, Func<TFrom, TTo> result);
             TTo Else(Func<TFrom, TTo> coerce);
             TTo ElseThrow();
@@ -28,7 +28,7 @@ namespace Sparta.Utils
                 this.result = result;
             }
 
-            public ICoercionContext<TFrom> WhenNull(Func<TTo> value)
+            public ICoercionContext<TFrom> Null(Func<TTo> value)
             {
                 return this;
             }
@@ -92,7 +92,7 @@ namespace Sparta.Utils
                 throw new ApplicationException("Could not coerce {0} [{1}] to {2}".FormatWith((value?.GetType() ?? typeof(TFrom)).Name, value, typeof(TTo).Name));
             }
 
-            public ICoercionContext<TFrom> WhenNull(Func<TTo> result)
+            public ICoercionContext<TFrom> Null(Func<TTo> result)
             {
                 if (value == null)
                     return Complete(result());

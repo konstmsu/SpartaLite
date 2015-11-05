@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
@@ -38,7 +37,10 @@ namespace Sparta.Controls
             validation.Delete();
 
             if (List.Any())
+            {
                 validation.Add(XlDVType.xlValidateList, XlDVAlertStyle.xlValidAlertInformation, XlFormatConditionOperator.xlBetween, List.JoinStrings(listSeparator));
+                validation.ShowError = false;
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Microsoft.Office.Interop.Excel;
 using Sparta.Engine.Utils;
@@ -23,7 +24,7 @@ namespace Sparta.Controls
                     return;
 
                 _selectedValue = value;
-                SelectedValueChanged.Raise();
+                SelectedValueChanged?.Invoke();
             }
         }
 
@@ -75,7 +76,25 @@ namespace Sparta.Controls
 
         public void OnChange(Range target)
         {
-            SelectedValue = (string)target.Value2;
+            var newValue = (string)target.Value2;
+
+            var bestMatch = Values.Where(v => v.Equals(newValue, StringComparison.OrdinalIgnoreCase)).ToList();
+
+            if (bestMatch.Any())
+            {
+                SelectedValue = bestMatch.First();
+                return;
+            }
+
+            bestMatch = Values.Where(v => v.StartsWith(newValue, StringComparison.OrdinalIgnoreCase)).ToList();
+
+            if (bestMatch.Any())
+            {
+                SelectedValue = bestMatch.First();
+                return;
+            }
+
+            throw new ApplicationException($"Could not match input '{newValue}' with any of the DropDown values [{Values.JoinStrings(", ")}]");
         }
     }
 }

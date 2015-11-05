@@ -1,20 +1,26 @@
-﻿using Microsoft.Office.Interop.Excel;
+﻿using System;
+using System.Data;
+using System.Drawing;
+using System.Windows.Forms;
+using Microsoft.VisualStudio.Tools.Applications.Runtime;
 using Sparta.Controls;
 using Sparta.Sheets;
+using Excel = Microsoft.Office.Interop.Excel;
+using Office = Microsoft.Office.Core;
 
 namespace Sparta
 {
     public partial class EntryPoint
     {
-        private void OnStartup(object sender, System.EventArgs e)
+        private void Sheet3_Startup(object sender, System.EventArgs e)
         {
             var factory = new SheetFactory(Application);
             factory.ShowSheet(s => new ContentsSheet(s, factory));
 
-            Visible = XlSheetVisibility.xlSheetVeryHidden;
+            Visible = Excel.XlSheetVisibility.xlSheetVeryHidden;
         }
 
-        private void OnShutdown(object sender, System.EventArgs e)
+        private void Sheet3_Shutdown(object sender, System.EventArgs e)
         {
         }
 
@@ -26,8 +32,8 @@ namespace Sparta
         /// </summary>
         private void InternalStartup()
         {
-            this.Startup += new System.EventHandler(OnStartup);
-            this.Shutdown += new System.EventHandler(OnShutdown);
+            this.Startup += new System.EventHandler(Sheet3_Startup);
+            this.Shutdown += new System.EventHandler(Sheet3_Shutdown);
         }
 
         #endregion

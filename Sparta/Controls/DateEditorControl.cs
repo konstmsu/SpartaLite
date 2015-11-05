@@ -17,7 +17,6 @@ namespace Sparta.Controls
         {
             _painter = new RangePainter
             {
-                FontColor = SpartaColors.ValueWithPopup,
                 NumberFormat = KnownFormats.Date
             };
         }
@@ -25,6 +24,7 @@ namespace Sparta.Controls
         public void Paint()
         {
             _painter.InteriorColor = IsDisabled ? SpartaColors.DisabledControlInterior : SpartaColors.DefaultControlInterior;
+            _painter.FontColor = IsDisabled ? SpartaColors.DisabledControlFont : SpartaColors.ValueWithPopup;
 
             _painter.Paint(Anchor);
         }

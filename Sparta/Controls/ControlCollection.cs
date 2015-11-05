@@ -1,10 +1,10 @@
 ﻿using Microsoft.Office.Interop.Excel;
-using System;
 using System.Collections.Generic;
+using Sparta.Engine.Utils;
 
 namespace Sparta.Controls
 {
-    class ControlCollection
+    public class ControlCollection
     {
         readonly List<IControl> _controls = new List<IControl>();
 
@@ -24,15 +24,13 @@ namespace Sparta.Controls
 
         internal void OnChange(Range target)
         {
-            foreach (var control in _controls)
+            _controls.ForEachAggregatingExceptions(control =>
             {
                 var range = control.NarrowDownEventRange(target);
 
                 if (range != null)
                     control.OnChange(range);
-            }
-
-            Paint();
+            });
         }
 
         internal void Paint()
