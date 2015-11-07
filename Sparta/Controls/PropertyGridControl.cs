@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.Office.Interop.Excel;
 
 namespace Sparta.Controls
@@ -17,8 +18,8 @@ namespace Sparta.Controls
             _labels.OnChange(target);
         }
 
-        readonly ControlCollection _labels = new ControlCollection();
-        readonly ControlCollection _values = new ControlCollection();
+        readonly List<IControl> _labels = new List<IControl>();
+        readonly List<IControl> _values = new List<IControl>();
 
         public PropertyGridControl(Range anchor)
         {

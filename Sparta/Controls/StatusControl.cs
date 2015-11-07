@@ -6,22 +6,21 @@ using Sparta.Utils;
 
 namespace Sparta.Controls
 {
-    public class StatusControl : ContrainerControl
+    public class StatusControl : IControl
     {
         readonly RangePainter _headerPainter;
         Range HeaderRange => Anchor.Resize[_headerRowCount, _columnCount];
 
+        readonly LabelControl _header;
         readonly LabelControl _body;
 
         readonly int _columnCount;
         readonly int _headerRowCount;
-        readonly int _bodyRowCount;
 
         public StatusControl(Range anchor, int columnCount, int headerRowCount, int bodyRowCount)
         {
             _columnCount = columnCount;
             _headerRowCount = headerRowCount;
-            _bodyRowCount = bodyRowCount;
 
             _headerPainter = new RangePainter
             {
@@ -29,14 +28,14 @@ namespace Sparta.Controls
             };
             _headerPainter.Border.Around();
 
-            Children.Add(new LabelControl
+            _header = new LabelControl
             {
                 Text = "Status",
                 Anchor = anchor,
                 Painter = { HorizontalAlignment = XlHAlign.xlHAlignLeft, FontSize = 16 }
-            });
+            };
 
-            Children.Add(_body = new LabelControl(bodyRowCount, columnCount)
+            _body = new LabelControl(bodyRowCount, columnCount)
             {
                 Anchor = anchor.Offset[headerRowCount],
                 Painter =
@@ -44,16 +43,34 @@ namespace Sparta.Controls
                     VerticalAlignment = XlVAlign.xlVAlignTop,
                     HorizontalAlignment = XlHAlign.xlHAlignLeft,
                 }
-            });
+            };
             _body.Painter.Border.Around();
 
             Anchor = anchor;
         }
 
-        public override void Paint()
+        public Range Anchor { get; set; }
+
+        public void Paint()
         {
             _headerPainter.Paint(HeaderRange);
-            base.Paint();
+            new[] { _header, _body }.Paint();
+        }
+
+        public void BeforeDoubleClick(Range target, HandledIndicator handled)
+        {
+            new[] { _header, _body }.OnBeforeDoubleClick(target, handled);
+        }
+
+        public Range NarrowDownEventRange(Range target)
+        {
+            return target;
+        }
+
+        public void OnChange(Range target)
+        {
+            if (_body.NarrowDownEventRange(target) != null)
+                _body.Text = null;
         }
 
         public void Append(Exception exception)

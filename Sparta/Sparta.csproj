@@ -124,14 +124,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\ContrainerControl.cs" />
+    <Compile Include="Controls\DataGridControl.cs" />
     <Compile Include="Controls\StatusControl.cs" />
+    <Compile Include="Controls\MoneyControl.cs" />
     <Compile Include="EntryPoint.cs">
       <DependentUpon>Sparta.xlsx</DependentUpon>
     </Compile>
     <Compile Include="EntryPoint.Designer.cs">
       <DependentUpon>EntryPoint.Designer.xml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\ApplicationExtensions.cs" />
     <Compile Include="Utils\CoerceTo.cs" />
     <Compile Include="Controls\BorderProperty.cs" />
     <Compile Include="Controls\Button.cs" />
@@ -166,6 +168,8 @@
     <Compile Include="ThisWorkbook.Designer.cs">
       <DependentUpon>ThisWorkbook.Designer.xml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\CompositeDisposable.cs" />
+    <Compile Include="Utils\Disposable.cs" />
     <Compile Include="Utils\ExcelHelper.cs" />
     <Compile Include="Utils\Popup.cs" />
     <Compile Include="ViewModels\FXForwardViewModel.cs" />

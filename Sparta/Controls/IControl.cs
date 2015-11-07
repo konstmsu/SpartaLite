@@ -9,9 +9,9 @@ namespace Sparta.Controls
 {
     public interface IControl
     {
+        Range Anchor { get; set; }
         void Paint();
         void BeforeDoubleClick(Range target, HandledIndicator handled);
-        Range Anchor { get; set; }
         Range NarrowDownEventRange(Range target);
         void OnChange(Range target);
     }

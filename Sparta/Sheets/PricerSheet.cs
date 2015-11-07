@@ -1,7 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Office.Interop.Excel;
 using Sparta.Controls;
+using Sparta.Engine;
 using Sparta.Engine.Utils;
+using static Sparta.Engine.Currency;
+using static System.DateTime;
+using static Sparta.Engine.Money;
 
 namespace Sparta.Sheets
 {
@@ -29,6 +34,63 @@ namespace Sparta.Sheets
 
             marketSettings.AddProperty("Valuation Date", valuationDate);
             marketSettings.AddProperty("Market", market);
+
+            var tradeArea = ControlRoot.AddControl(new DataGridControl(sheet.Range["B15"], () => _trades.Count));
+            tradeArea.AddColumn("Settlement Date", i => _trades[i].SettlementDate);
+            tradeArea.AddColumn("Domestic", i => _trades[i].Domestic);
+            tradeArea.AddColumn("Foreign", i => _trades[i].Foreign);
+
+            _trades.Add(new FXForwardRowView
+            {
+                Domestic = { Value = Eur(10000) },
+                Foreign = { Value = Usd(12000) },
+                SettlementDate = { Value = Today.AddMonths(3) }
+            });
+
+            _trades.Add(new FXForwardRowView
+            {
+                Domestic = { Value = Rub(10000) },
+                Foreign = { Value = Sgd(12000) },
+                SettlementDate = { Value = Today.AddMonths(6) }
+            });
+        }
+
+        readonly List<FXForwardRowView> _trades = new List<FXForwardRowView>();
+    }
+
+    public class TradePropertyView
+    {
+        public readonly string Header;
+        public readonly IControl Control;
+
+        public TradePropertyView(string header, IControl control)
+        {
+            Header = header;
+            Control = control;
+        }
+    }
+
+    public class TradeRowView
+    {
+        public List<TradePropertyView> Properties = new List<TradePropertyView>();
+
+        protected void AddProperty(string header, IControl control)
+        {
+            Properties.Add(new TradePropertyView(header, control));
+        }
+    }
+
+    public class FXForwardRowView : TradeRowView
+    {
+        public readonly DateEditorControl SettlementDate;
+        public readonly MoneyControl Domestic;
+        public readonly MoneyControl Foreign;
+
+        public FXForwardRowView()
+        {
+            AddProperty("Settlement Date", SettlementDate = new DateEditorControl());
+            AddProperty("Domestic", Domestic = new MoneyControl());
+            AddProperty("Foreign", Foreign = new MoneyControl());
         }
     }
 }

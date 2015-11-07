@@ -4,16 +4,11 @@ using Sparta.Engine.Utils;
 
 namespace Sparta.Controls
 {
-    public class ControlCollection
+    public static class ControlCollectionExtensions
     {
-        readonly List<IControl> _controls = new List<IControl>();
-
-        public int Count => _controls.Count;
-        public IControl this[int i] => _controls[i];
-
-        internal void OnBeforeDoubleClick(Range target, HandledIndicator handled)
+        public static void OnBeforeDoubleClick(this IEnumerable<IControl> controls, Range target, HandledIndicator handled)
         {
-            foreach (var control in _controls)
+            foreach (var control in controls)
             {
                 var range = control.NarrowDownEventRange(target);
 
@@ -22,9 +17,9 @@ namespace Sparta.Controls
             }
         }
 
-        internal void OnChange(Range target)
+        public static void OnChange(this IEnumerable<IControl> controls, Range target)
         {
-            _controls.ForEachAggregatingExceptions(control =>
+            controls.ForEachAggregatingExceptions(control =>
             {
                 var range = control.NarrowDownEventRange(target);
 
@@ -33,15 +28,10 @@ namespace Sparta.Controls
             });
         }
 
-        internal void Paint()
+        public static void Paint(this IEnumerable<IControl> controls)
         {
-            foreach (var control in _controls)
+            foreach (var control in controls)
                 control.Paint();
-        }
-
-        internal void Add(IControl button)
-        {
-            _controls.Add(button);
         }
     }
 }

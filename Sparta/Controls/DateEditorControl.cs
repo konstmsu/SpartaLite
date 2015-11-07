@@ -36,20 +36,12 @@ namespace Sparta.Controls
             if (IsDisabled)
                 return;
 
-            DateEditorPopupViewModel viewModel = null;
+            var viewModel = new DateEditorPopupViewModel { Value = Value };
 
             var dialogResult = Popup.ShowDialog(w =>
             {
-                var view = new DateEditorPopupView
-                {
-                    DataContext = viewModel = new DateEditorPopupViewModel
-                    {
-                        Value = Value
-                    }
-                };
-
+                var view = new DateEditorPopupView { DataContext = viewModel };
                 view.ValueSelected += () => w.DialogResult = true;
-
                 return view;
             });
 

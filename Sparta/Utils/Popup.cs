@@ -36,12 +36,13 @@ namespace Sparta.Utils
             window.Loaded += delegate
             {
                 POINT mouse;
-                if (GetCursorPos(out mouse))
-                {
-                    window.WindowStartupLocation = WindowStartupLocation.Manual;
-                    window.Top = mouse.Y - window.Height / 2;
-                    window.Left = mouse.X - window.Width / 2;
-                }
+
+                if (!GetCursorPos(out mouse))
+                    return;
+
+                window.WindowStartupLocation = WindowStartupLocation.Manual;
+                window.Top = mouse.Y - window.Height / 2;
+                window.Left = mouse.X - window.Width / 2;
             };
             
             return window.ShowDialog();

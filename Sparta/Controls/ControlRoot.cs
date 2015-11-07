@@ -1,12 +1,14 @@
 ﻿using Microsoft.Office.Interop.Excel;
 using System;
+using System.Collections.Generic;
+using Sparta.Utils;
 
 namespace Sparta.Controls
 {
     public class ControlRoot : IDisposable
     {
         readonly Worksheet _sheet;
-        readonly ControlCollection _children = new ControlCollection();
+        readonly List<IControl> _children = new List<IControl>();
         public event Action<Exception> UnhandledException;
 
         public ControlRoot(Worksheet sheet)
@@ -58,16 +60,10 @@ namespace Sparta.Controls
 
         public void Paint()
         {
-            // TODO: Preserve old value
-            _sheet.Application.EnableEvents = false;
-            try
+            using (_sheet.Application.SetTemporarily(enableEvents: false, screenUpdating: false))
             {
                 _children.Paint();
                 _sheet.Columns.AutoFit();
-            }
-            finally
-            {
-                _sheet.Application.EnableEvents = true;
             }
         }
     }
