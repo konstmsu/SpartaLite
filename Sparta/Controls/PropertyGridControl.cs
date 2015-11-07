@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.Office.Interop.Excel;
 
 namespace Sparta.Controls
@@ -19,7 +14,7 @@ namespace Sparta.Controls
         public void OnChange(Range target)
         {
             _values.OnChange(target);
-            // _labels.OnChange(target);
+            _labels.OnChange(target);
         }
 
         readonly ControlCollection _labels = new ControlCollection();

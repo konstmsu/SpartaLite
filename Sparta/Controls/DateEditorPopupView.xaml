@@ -8,7 +8,7 @@
     <Calendar SelectedDate="{Binding Value}">
         <Calendar.CalendarDayButtonStyle>
             <Style TargetType="{x:Type CalendarDayButton}">
-                <EventSetter Event="MouseDoubleClick" Handler="CalendarDayButton_DoubleClick"></EventSetter>
+                <EventSetter Event="PreviewMouseDoubleClick" Handler="CalendarDayButton_DoubleClick"></EventSetter>
             </Style>
         </Calendar.CalendarDayButtonStyle>
     </Calendar>

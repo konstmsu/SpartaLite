@@ -73,7 +73,7 @@ namespace Sparta.Controls
             Value = CoerceToDateTime(target.Value2);
         }
 
-        DateTime CoerceToDateTime(object value)
+        static DateTime CoerceToDateTime(object value)
         {
             return CoerceTo<DateTime>.Value(value)
                 .Type<DateTime>(v => v)

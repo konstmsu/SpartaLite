@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Input;
-using Sparta.Engine.Utils;
+using System.Windows;
 
 namespace Sparta.Controls
 {
@@ -15,7 +12,7 @@ namespace Sparta.Controls
 
         public event Action ValueSelected;
 
-        void CalendarDayButton_DoubleClick(object sender, MouseButtonEventArgs e)
+        void CalendarDayButton_DoubleClick(object sender, RoutedEventArgs e)
         {
             ValueSelected?.Invoke();
         }
