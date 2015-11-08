@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Office.Interop.Excel;
 using Sparta.Controls;
-using Sparta.Engine;
 using Sparta.Engine.Utils;
-using static Sparta.Engine.Currency;
 using static System.DateTime;
 using static Sparta.Engine.Money;
 
@@ -50,7 +48,7 @@ namespace Sparta.Sheets
             _trades.Add(new FXForwardRowView
             {
                 Domestic = { Value = Rub(10000) },
-                Foreign = { Value = Sgd(12000) },
+                Foreign = { Value = Sgd(-12000) },
                 SettlementDate = { Value = Today.AddMonths(6) }
             });
         }

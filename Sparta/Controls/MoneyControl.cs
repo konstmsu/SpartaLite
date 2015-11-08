@@ -17,7 +17,7 @@ namespace Sparta.Controls
                 _value = value;
                 _painter.Value2 = value.Amount;
                 var currency = $"\"{value.Currency.Code}\"";
-                _painter.NumberFormat = $"{currency} #,0.00;[Red]{currency} -#,0.00";
+                _painter.NumberFormat = $"{currency} #,0.00;[Red]{currency} (#,0.00)";
             }
         }
 
