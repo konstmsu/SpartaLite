@@ -1,47 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Microsoft.Office.Interop.Excel;
+using Sparta.Engine.Utils;
+using Sparta.Sheets;
 using Sparta.Utils;
 
 namespace Sparta.Controls
 {
-    public class DataGridControl : IControl
+    public class DynamicDataGridControl : IControl
     {
-        readonly Func<int> _getRowCount;
+        readonly IReadOnlyList<TradeRowView> _rows;
+        readonly List<DataGridColumn> _columns = new List<DataGridColumn>();
         readonly RangePainter _headerPainter = new RangePainter();
         readonly RangePainter _bodyPainter = new RangePainter();
 
         Range _headerRange;
         Range _bodyRange;
 
-        public DataGridControl(Range anchor, Func<int> getRowCount)
+        public DynamicDataGridControl(Range anchor, IReadOnlyList<TradeRowView> rows)
         {
-            _getRowCount = getRowCount;
+            _rows = rows;
             Anchor = anchor;
         }
 
         class DataGridColumn
         {
-            public readonly IControl Header;
-            public Func<int, IControl> GetCell;
+            public readonly DropDownSelector Header;
 
-            public DataGridColumn(IControl header, Func<int, IControl> getCell)
+            public DataGridColumn(string title, Func<ReadOnlyCollection<string>> getAllHeaders)
             {
-                Header = header;
-                GetCell = getCell;
+                Header = new DropDownSelector { SelectedValue = title, Values = getAllHeaders() };
+            }
+
+            public TradePropertyView GetCell(TradeRowView row)
+            {
+                return row.Properties.SingleOrDefault(p => p.Header == Header.SelectedValue);
             }
         }
 
-        readonly List<DataGridColumn> _columns = new List<DataGridColumn>();
-
-        public void AddColumn(string header, Func<int, IControl> getCell)
+        void AddColumn(string title)
         {
-            _columns.Add(new DataGridColumn(new LabelControl { Text = header }, getCell));
+            _columns.Add(new DataGridColumn(title, GetAllHeaders));
+        }
+
+        ReadOnlyCollection<string> GetAllHeaders()
+        {
+            return _rows.SelectMany(r => r.Properties).Select(p => p.Header).Distinct().ToReadOnly();
         }
 
         int ColumnCount => _columns.Count;
-        int BodyRowCount => _getRowCount();
+        int BodyRowCount => _rows.Count;
 
         public void Paint()
         {
@@ -55,13 +65,17 @@ namespace Sparta.Controls
             {
                 _columns[c].Header.Anchor = Anchor.Offset[0, c];
                 _columns[c].Header.Paint();
-
             }
 
             for (var c = 0; c < ColumnCount; c++)
                 for (var r = 0; r < BodyRowCount; r++)
                 {
-                    var cell = _columns[c].GetCell(r);
+                    var property = _columns[c].GetCell(_rows[r]);
+
+                    if (property == null)
+                        continue;
+
+                    var cell = property.Control;
                     cell.Anchor = Anchor.Offset[r + 1, c];
                     cell.Paint();
                 }
@@ -77,7 +91,7 @@ namespace Sparta.Controls
             var row = target.Row - Anchor.Row - 1;
             var column = target.Column - Anchor.Column;
 
-            return row == -1 ? _columns[column].Header : _columns[column].GetCell(row);
+            return row == -1 ? _columns[column].Header : _columns[column].GetCell(_rows[row])?.Control;
         }
 
         public Range Anchor { get; set; }
@@ -89,6 +103,12 @@ namespace Sparta.Controls
         public void OnChange(Range target)
         {
             target.Cells.Cast<Range>().Select(GetCell).OnChange(target);
+        }
+
+        public void AddColumns(IEnumerable<string> columnHeaders)
+        {
+            foreach (var header in columnHeaders)
+                AddColumn(header);
         }
     }
 }

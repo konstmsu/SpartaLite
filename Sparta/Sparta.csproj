@@ -124,6 +124,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\DynamicDataGridControl.cs" />
     <Compile Include="Controls\DataGridControl.cs" />
     <Compile Include="Controls\StatusControl.cs" />
     <Compile Include="Controls\MoneyControl.cs" />

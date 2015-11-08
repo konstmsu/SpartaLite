@@ -24,8 +24,8 @@ namespace Sparta.Sheets
 
             var marketSettings = ControlRoot.AddControl(new PropertyGridControl(sheet.Range["B3"]));
 
-            var market = new DropDownSelector { Values = new[] { "Live", "Close" }.ToReadOnly() };
-            var valuationDate = new DateEditorControl { Value = DateTime.Today };
+            var market = new DropDownSelector { Values = new[] { "Live", "Close" }.ToReadOnly(), SelectedValue = "Live" };
+            var valuationDate = new DateEditorControl { Value = Today };
             System.Action onMarketChanged = () => valuationDate.IsDisabled = market.SelectedValue == "Live";
             market.SelectedValueChanged += onMarketChanged;
             onMarketChanged();
@@ -33,27 +33,28 @@ namespace Sparta.Sheets
             marketSettings.AddProperty("Valuation Date", valuationDate);
             marketSettings.AddProperty("Market", market);
 
-            var tradeArea = ControlRoot.AddControl(new DataGridControl(sheet.Range["B15"], () => _trades.Count));
-            tradeArea.AddColumn("Settlement Date", i => _trades[i].SettlementDate);
-            tradeArea.AddColumn("Domestic", i => _trades[i].Domestic);
-            tradeArea.AddColumn("Foreign", i => _trades[i].Foreign);
+            var trades = new List<TradeRowView>();
 
-            _trades.Add(new FXForwardRowView
+            trades.Add(new FXForwardRowView
             {
                 Domestic = { Value = Eur(10000) },
                 Foreign = { Value = Usd(12000) },
-                SettlementDate = { Value = Today.AddMonths(3) }
+                SettlementDate = { Value = Today.AddMonths(3) },
+                ForwardRate = { Value = 1.2m }
             });
 
-            _trades.Add(new FXForwardRowView
+            trades.Add(new FXVanillaOptionRowView
             {
                 Domestic = { Value = Rub(10000) },
                 Foreign = { Value = Sgd(-12000) },
-                SettlementDate = { Value = Today.AddMonths(6) }
+                SettlementDate = { Value = Today.AddMonths(6) },
+                Strike = { Value = 1.4m }
             });
-        }
 
-        readonly List<FXForwardRowView> _trades = new List<FXForwardRowView>();
+            var tradeArea = ControlRoot.AddControl(new DynamicDataGridControl(sheet.Range["B15"], trades));
+
+            tradeArea.AddColumns(new[] { "Settlement Date", "Domestic" });
+        }
     }
 
     public class TradePropertyView
@@ -83,12 +84,30 @@ namespace Sparta.Sheets
         public readonly DateEditorControl SettlementDate;
         public readonly MoneyControl Domestic;
         public readonly MoneyControl Foreign;
+        public readonly DecimalEditorControl ForwardRate;
 
         public FXForwardRowView()
         {
             AddProperty("Settlement Date", SettlementDate = new DateEditorControl());
             AddProperty("Domestic", Domestic = new MoneyControl());
             AddProperty("Foreign", Foreign = new MoneyControl());
+            AddProperty("Forward Rate", ForwardRate = new DecimalEditorControl());
+        }
+    }
+
+    public class FXVanillaOptionRowView : TradeRowView
+    {
+        public readonly DateEditorControl SettlementDate;
+        public readonly MoneyControl Domestic;
+        public readonly MoneyControl Foreign;
+        public readonly DecimalEditorControl Strike;
+
+        public FXVanillaOptionRowView()
+        {
+            AddProperty("Settlement Date", SettlementDate = new DateEditorControl());
+            AddProperty("Domestic", Domestic = new MoneyControl());
+            AddProperty("Foreign", Foreign = new MoneyControl());
+            AddProperty("Strike", Strike = new DecimalEditorControl());
         }
     }
 }

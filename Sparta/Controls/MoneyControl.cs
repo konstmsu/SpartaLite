@@ -54,4 +54,37 @@ namespace Sparta.Controls
                 throw new FormatException($"Could not parse '{target.Value2}' as Money");
         }
     }
+
+    public class DecimalEditorControl : IControl
+    {
+        public decimal Value
+        {
+            get { return (decimal)_painter.Value2; }
+            set { _painter.Value2 = value; }
+        }
+
+        readonly RangePainter _painter = new RangePainter();
+
+        public Range Anchor { get; set; }
+
+        public void Paint()
+        {
+            _painter.Paint(Anchor);
+        }
+
+        public void BeforeDoubleClick(Range target, HandledIndicator handled)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Range NarrowDownEventRange(Range target)
+        {
+            return target.GetIntersection(Anchor);
+        }
+
+        public void OnChange(Range target)
+        {
+            Value = target.Value2 == null ? 0 : (decimal)(double)target.Value2;
+        }
+    }
 }

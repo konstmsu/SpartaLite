@@ -69,6 +69,7 @@ namespace Sparta.Controls
         {
             return CoerceTo<DateTime>.Value(value)
                 .Type<DateTime>(v => v)
+                .Type<double>(v => DateTime.FromOADate(v))
                 .Type<int>(v => DateTime.FromOADate(v))
                 .ElseThrow();
         }

@@ -33,13 +33,7 @@ namespace Sparta.Controls
         public ReadOnlyCollection<string> Values
         {
             get { return _values; }
-            set
-            {
-                _values = value;
-
-                if (!Values.Contains(SelectedValue))
-                    SelectedValue = Values.FirstOrDefault();
-            }
+            set { _values = value; }
         }
 
         ReadOnlyCollection<string> _values
